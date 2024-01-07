@@ -2,7 +2,6 @@ import ExpensesTable from "@/ui/table"
 
 
   async function getData() {
-    console.log('hello')
     const res = await fetch('http://localhost:8080/expenses')
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
