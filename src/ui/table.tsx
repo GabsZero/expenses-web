@@ -1,7 +1,8 @@
 
-export default async function ExpensesTable({expenses}) {
+export default async function ExpensesTable({expenses} :any) {
   
-  return <table className="table">
+  return (
+    <table className="table">
         <thead>
           <tr>
             <th>Name</th>
@@ -11,14 +12,22 @@ export default async function ExpensesTable({expenses}) {
           </tr>
         </thead>
         <tbody>
-          {expenses.map(expense => {
-            return <tr key={expense.ID}>
-              <td>{expense.Name}</td>
-              <td>{new Date(expense.date).toLocaleDateString()}</td>
-              <td>{expense.CurrentInstallment}</td>
-              <td>{expense.TotalInstallments}</td>
+
+          {
+            expenses.length > 0 ?
+              expenses.map(expense => {
+              return <tr key={expense.ID}>
+                <td>{expense.Name}</td>
+                <td>{new Date(expense.date).toLocaleDateString()}</td>
+                <td>{expense.CurrentInstallment}</td>
+                <td>{expense.TotalInstallments}</td>
+              </tr>
+            })
+            : <tr>
+              <td colSpan={50}>Dados Não encontrados</td>
             </tr>
-          })}
+          }
         </tbody>
       </table>
+  )
 }
