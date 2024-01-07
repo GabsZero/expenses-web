@@ -36,7 +36,7 @@ const geraAnosSelect = (): Array<number> => {
 }
 
 
-export default async function Home({searchParams}) {
+export default async function Home({searchParams}: any) {
   console.log(searchParams)
   const expensesResponse: any = await getData(searchParams.mes, searchParams.ano)
   const expenses: Expense[] = expensesResponse.expenses
