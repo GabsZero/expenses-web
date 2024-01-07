@@ -2,13 +2,15 @@ import ExpensesTable from "@/ui/table"
 
 
 async function getData(mes: string, ano: string) {
-  let date: string = `${ano}-${mes}-01`
+  let date: string = `${ano}-${mes}`
   if(!mes || !ano){
-    date = ""
+    const now: Date = new Date()
+    const mes = now.getMonth() + 1
+
+    date = `${now.getFullYear()}-${mes.toString().padStart(2, "0")}`
   }
 
-  console.log(date)
-  const url: string = `http://localhost:8080/expenses?date=${date}`
+  const url: string = `http://localhost:8080/getExpensesByMonth?date=${date}`
   const res = await fetch(url)
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
@@ -35,6 +37,10 @@ const geraAnosSelect = (): Array<number> => {
   return resultado
 }
 
+const handleMonthChange = (e: any) => {
+  console.log(e)
+}
+
 
 export default async function Home({searchParams}: any) {
   console.log(searchParams)
@@ -50,18 +56,18 @@ export default async function Home({searchParams}: any) {
               <label htmlFor="mes" className ="form-label">Mês</label>
               <select className="form-control" name="mes" id="mes">
                 <option value="">Selecione um mês</option>
-                <option value="01">Janeiro</option>
-                <option value="02">Fevereiro</option>
-                <option value="03">Março</option>
-                <option value="04">Abril</option>
-                <option value="05">maio</option>
-                <option value="06">Junho</option>
-                <option value="07">Julho</option>
-                <option value="08">Agosto</option>
-                <option value="09">Setembro</option>
-                <option value="10">Outubro</option>
-                <option value="11">Novembro</option>
-                <option value="12">Dezembro</option>
+                <option selected={searchParams.mes == "01"} value="01">Janeiro</option>
+                <option selected={searchParams.mes == "02"} value="02">Fevereiro</option>
+                <option selected={searchParams.mes == "03"} value="03">Março</option>
+                <option selected={searchParams.mes == "04"} value="04">Abril</option>
+                <option selected={searchParams.mes == "05"} value="05">maio</option>
+                <option selected={searchParams.mes == "06"} value="06">Junho</option>
+                <option selected={searchParams.mes == "07"} value="07">Julho</option>
+                <option selected={searchParams.mes == "08"} value="08">Agosto</option>
+                <option selected={searchParams.mes == "09"} value="09">Setembro</option>
+                <option selected={searchParams.mes == "10"} value="10">Outubro</option>
+                <option selected={searchParams.mes == "11"} value="11">Novembro</option>
+                <option selected={searchParams.mes == "12"} value="12">Dezembro</option>
               </select>
             </div>
             <div className="col-md-3">
@@ -70,7 +76,7 @@ export default async function Home({searchParams}: any) {
                 <option value="">Selecione um ano</option>
                 {
                   anos.map(ano => {
-                    return <option value={ano}>{ano}</option>
+                    return <option selected={searchParams.ano == ano} value={ano}>{ano}</option>
                   })
                 }
               </select>
