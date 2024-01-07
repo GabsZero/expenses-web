@@ -37,10 +37,6 @@ const geraAnosSelect = (): Array<number> => {
   return resultado
 }
 
-const handleMonthChange = (e: any) => {
-  console.log(e)
-}
-
 
 export default async function Home({searchParams}: any) {
   console.log(searchParams)
