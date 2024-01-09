@@ -6,7 +6,7 @@ type Expense = {
   TotalInstallments: number,
   ExpenseTypeId: number,
   Amount: number,
-  type: ExpenseType
+  ExpenseType: ExpenseType
   IsPaid: boolean,
   IsRecurring: boolean,
   CreatedAt: Date,
