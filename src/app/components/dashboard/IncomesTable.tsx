@@ -1,11 +1,11 @@
 
 type Props = {
-  incomes: Income[]
+  incomes: Income[],
+  total: number
 }
 
-export default async function IncomesTable({incomes} :Props) {
+export default async function IncomesTable({incomes, total} :Props) {
   const incomesMapped = mapExpenses(incomes)
-  const total: number = incomes.reduce((currentValue: number, income: Income) => currentValue + income.Amount, 0)
 
   return (
     <div className="card">
@@ -18,12 +18,8 @@ export default async function IncomesTable({incomes} :Props) {
           <tr>
             <th>Nome</th>
             <th>Data</th>
-            <th>Parcela atual</th>
-            <th>Total de parcelas</th>
-            <th>Tipo de despesa</th>
+            <th>Tipo de entrada</th>
             <th>Valor</th>
-            <th>É Recorrente?</th>
-            <th>Pago?</th>
           </tr>
         </thead>
         <tbody>
@@ -39,7 +35,7 @@ export default async function IncomesTable({incomes} :Props) {
         <tfoot>
         <tr>
           <th>Total</th>
-            <td colSpan={4}></td>
+            <td colSpan={2}></td>
             <td colSpan={50}>R${total}</td>
           </tr>
         </tfoot>
@@ -54,6 +50,7 @@ function mapExpenses(incomes: Income[]) {
     return <tr key={income.ID}>
       <td>{income.Name}</td>
       <td>{new Date(income.date).toLocaleDateString()}</td>
+      <td>{income.IncomeType.Name}</td>
       <td>R${income.Amount}</td>
     </tr>
   })

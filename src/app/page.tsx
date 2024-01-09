@@ -10,11 +10,30 @@ async function getData(mes: string, ano: string) {
     date = `${now.getFullYear()}-${mes.toString().padStart(2, "0")}`
   }
 
-  const expenseUrl: string = `http://localhost:8080/getExpensesByMonth?date=${date}`
-  const res = await fetch(expenseUrl)
+  const url: string = `http://localhost:8080/getExpensesByMonth?date=${date}`
+  const res = await fetch(url)
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+ 
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+ 
+  return await res.json()
+}
 
-  const incomeUrl: string = `http://localhost:8080/getExpensesByMonth?date=${date}`
-  const res = await fetch(expenseUrl)
+async function getIncomes(mes: string, ano: string) {
+  let date: string = `${ano}-${mes}`
+  if(!mes || !ano){
+    const now: Date = new Date()
+    const mes = now.getMonth() + 1
+
+    date = `${now.getFullYear()}-${mes.toString().padStart(2, "0")}`
+  }
+
+  const url: string = `http://localhost:8080/getIncomesByMonth?date=${date}`
+  const res = await fetch(url)
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
  
@@ -44,8 +63,15 @@ const geraAnosSelect = (): Array<number> => {
 export default async function Home({searchParams}: any) {
   console.log(searchParams)
   const expensesResponse: any = await getData(searchParams.mes, searchParams.ano)
+  const incomesResponse: any = await getIncomes(searchParams.mes, searchParams.ano)
   const expenses: Expense[] = expensesResponse.expenses
+  const expensesTotal: number = expenses.reduce((currentValue: number, expense: Expense) => currentValue + expense.Amount, 0)
+
+  const incomes: Income[] = incomesResponse.incomes
+  const incomesTotal: number = incomes.reduce((currentValue: number, income: Income) => currentValue + income.Amount, 0)
   const anos = geraAnosSelect()
+
+  const classe: string = incomesTotal > expensesTotal ? 'success' : 'danger'
 
   return (
     <main>
@@ -87,12 +113,20 @@ export default async function Home({searchParams}: any) {
         </form>
         <div className="row mb-3">
           <div className="col-md-12">
-            <IncomesTable incomes={[]}></IncomesTable>
+            <IncomesTable incomes={incomes} total={incomesTotal} />
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-            <ExpensesTable expenses={expenses} />
+            <ExpensesTable expenses={expenses} total={expensesTotal}/>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-12">
+            <div className={`alert alert-${classe}`}>
+              Subtotal: {incomesTotal - expensesTotal}
+            </div>
           </div>
         </div>
         

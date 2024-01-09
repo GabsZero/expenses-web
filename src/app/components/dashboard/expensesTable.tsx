@@ -1,11 +1,11 @@
 
 type Props = {
-  expenses: Expense[]
+  expenses: Expense[],
+  total: number
 }
 
-export default async function ExpensesTable({expenses} :Props) {
+export default async function ExpensesTable({expenses, total} :Props) {
   const expensesMapped = mapExpenses(expenses)
-  const total: number = expenses.reduce((currentValue: number, expense: Expense) => currentValue + expense.Amount, 0)
 
   return (
     <div className="card">

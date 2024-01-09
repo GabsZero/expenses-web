@@ -1,25 +1,13 @@
 type Income = {
   ID: number,
-  Name: string,
-  date: Date,
-  CurrentInstallment: number,
-  TotalInstallments: number,
-  ExpenseTypeId: number,
+  Name: string
+  date: Date
   Amount: number,
-  type: ExpenseType
-  IsPaid: boolean,
-  IsRecurring: boolean,
-  CreatedAt: Date,
-  UpdatedAt: Date,
-  DeletedAt: Date
+  IncomeType: IncomeType
 }
 
 type IncomeType = {
-  ID: number,
-  Name: string,
-  Slug: string,
-  CreatedAt: Date,
-  UpdatedAt: Date,
-  DeletedAt: Date
-
+    ID: number,
+    Name: string,
+    Slug: string,
 }
