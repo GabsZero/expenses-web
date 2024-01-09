@@ -56,7 +56,7 @@ function mapExpenses(expenses: Expense[]) {
       <td>{new Date(expense.date).toLocaleDateString()}</td>
       <td>{expense.CurrentInstallment}</td>
       <td>{expense.TotalInstallments}</td>
-      <td>{expense.ExpenseTypeId}</td>
+      <td>{expense.ExpenseType.Name}</td>
       <td>R${expense.Amount}</td>
       <td>{expense.IsRecurring ? 'Sim' : 'Não'}</td>
       <td>{expense.IsPaid ? 'Sim' : 'Não'}</td>
