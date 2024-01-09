@@ -1,3 +1,4 @@
+import IncomesTable from "./components/dashboard/IncomesTable"
 import ExpensesTable from "./components/dashboard/expensesTable"
 
 async function getData(mes: string, ano: string) {
@@ -9,8 +10,11 @@ async function getData(mes: string, ano: string) {
     date = `${now.getFullYear()}-${mes.toString().padStart(2, "0")}`
   }
 
-  const url: string = `http://localhost:8080/getExpensesByMonth?date=${date}`
-  const res = await fetch(url)
+  const expenseUrl: string = `http://localhost:8080/getExpensesByMonth?date=${date}`
+  const res = await fetch(expenseUrl)
+
+  const incomeUrl: string = `http://localhost:8080/getExpensesByMonth?date=${date}`
+  const res = await fetch(expenseUrl)
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
  
@@ -81,7 +85,17 @@ export default async function Home({searchParams}: any) {
             </div>
           </div>
         </form>
-        <ExpensesTable expenses={expenses} />
+        <div className="row mb-3">
+          <div className="col-md-12">
+            <IncomesTable incomes={[]}></IncomesTable>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <ExpensesTable expenses={expenses} />
+          </div>
+        </div>
+        
     </main>
   )
 }
