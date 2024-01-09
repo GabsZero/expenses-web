@@ -4,7 +4,9 @@ type Props = {
 }
 
 export default async function ExpensesTable({expenses} :Props) {
-  
+  const expensesMapped = mapExpenses(expenses)
+  const total: number = expenses.reduce((currentValue: number, expense: Expense) => currentValue + expense.Amount, 0)
+
   return (
     <div className="card">
       <div className="card-header">
@@ -28,25 +30,37 @@ export default async function ExpensesTable({expenses} :Props) {
 
             {
               expenses.length > 0 ?
-                expenses.map(expense => {
-                return <tr key={expense.ID}>
-                  <td>{expense.Name}</td>
-                  <td>{new Date(expense.date).toLocaleDateString()}</td>
-                  <td>{expense.CurrentInstallment}</td>
-                  <td>{expense.TotalInstallments}</td>
-                  <td>{expense.ExpenseTypeId}</td>
-                  <td>{expense.Amount}</td>
-                  <td>{expense.IsRecurring ? 'Sim' : 'Não'}</td>
-                  <td>{expense.IsPaid ? 'Sim' : 'Não'}</td>
-                </tr>
-              })
+                expensesMapped
               : <tr>
                 <td colSpan={50}>Dados Não encontrados</td>
               </tr>
             }
         </tbody>
+        <tfoot>
+        <tr>
+          <th>Total</th>
+            <td colSpan={4}></td>
+            <td colSpan={50}>R${total}</td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
   )
 }
+
+function mapExpenses(expenses: Expense[]) {
+  return expenses.map(expense => {
+    return <tr key={expense.ID}>
+      <td>{expense.Name}</td>
+      <td>{new Date(expense.date).toLocaleDateString()}</td>
+      <td>{expense.CurrentInstallment}</td>
+      <td>{expense.TotalInstallments}</td>
+      <td>{expense.ExpenseTypeId}</td>
+      <td>R${expense.Amount}</td>
+      <td>{expense.IsRecurring ? 'Sim' : 'Não'}</td>
+      <td>{expense.IsPaid ? 'Sim' : 'Não'}</td>
+    </tr>
+  })
+}
+
