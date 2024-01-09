@@ -1,5 +1,4 @@
-import ExpensesTable from "@/ui/table"
-
+import ExpensesTable from "./components/dashboard/expensesTable"
 
 async function getData(mes: string, ano: string) {
   let date: string = `${ano}-${mes}`
@@ -82,14 +81,7 @@ export default async function Home({searchParams}: any) {
             </div>
           </div>
         </form>
-      <div className="card">
-        <div className="card-header">
-          <h2>Despesas</h2>
-        </div>
-        <div className="card-body">
-          <ExpensesTable expenses={expenses} />
-        </div>
-      </div>
+        <ExpensesTable expenses={expenses} />
     </main>
   )
 }
