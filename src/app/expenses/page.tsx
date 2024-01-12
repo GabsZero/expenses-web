@@ -1,4 +1,5 @@
-import ExpensesTable from "@/ui/table"
+import ExpensesTable from "../components/dashboard/expensesTable"
+
 
 
   async function getData() {
