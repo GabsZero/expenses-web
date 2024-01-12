@@ -1,14 +1,38 @@
 'use client';
 
-import { FormEvent } from "react"
+import { FormEvent, useState } from "react"
 
 export default function NovaDespesa({tiposDespesas}: any) {
+  let [error, setError] = useState("")
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const formData = new FormData(event.currentTarget as HTMLFormElement)
-    console.log(formData)
+    const formData = new FormData(event.currentTarget)
+    formData.set("isPaid", formData.get('isPaid') == "on" ? "1" : "0")
+    formData.set("isRecurring", formData.get('isPaid') == "on" ? "1" : "0")
+
+    const bodyRequest = new FormData()
+    formData.forEach((item, key) => {
+      bodyRequest.append(key, item)
+    })
+
+    const response = await fetch('http://localhost:8080/expenses', {
+      method: 'POST',
+      body: bodyRequest
+    })
+
+    console.log(!response.ok)
+    if(!response.ok){
+      console.log("macaralho")
+      setError("Erro ao gravar despesa")
+      return false
+    }
+
+    const data = await response.json()
+
+    console.log(response)
   }
+
 
   return (
     <form action="" onSubmit={handleSubmit}>
@@ -35,7 +59,7 @@ export default function NovaDespesa({tiposDespesas}: any) {
           <label htmlFor="expenseTypeId">Tipo de despesa</label>
           <select id="expenseTypeId" className="form-control" name="expenseTypeId">
           <option>Selecione</option>
-            <option>Maoe</option>
+            <option value="1">Maoe</option>
           </select>
         </div>
         <div className="col-md-6">
@@ -58,6 +82,15 @@ export default function NovaDespesa({tiposDespesas}: any) {
         <div className="col-md-12 text-right">
           <input className="btn btn-lg btn-primary" type="submit" value="Enviar" />
         </div>
+        {
+          error != "" ?
+          <div className="row mt-3">
+            <div className="col-md-12 text-center alert alert-danger">
+              {error}
+            </div>
+          </div>
+          : ""
+        }
       </div>
     </form>
   )
