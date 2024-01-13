@@ -7,24 +7,8 @@ type Props = {
 
 export default async function ExpensesTable({expenses, total} :Props) {
   
-  async function getExpensesType() {
-    const url: string = `http://localhost:8080/getExpensesType`
-    const res = await fetch(url)
-    // The return value is *not* serialized
-    // You can return Date, Map, Set, etc.
-   
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data')
-    }
-   
-    return await res.json()
-  }
 
   const expensesMapped = mapExpenses(expenses)
-  const expensesType = getExpensesType()
-
-  console.log(expensesType)
 
   return (
     <div className="card">
