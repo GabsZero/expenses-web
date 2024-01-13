@@ -1,9 +1,27 @@
 'use client';
 
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 
 export default function NovaDespesa({tiposDespesas}: any) {
   let [error, setError] = useState("")
+  const [expensesType, setExepensesType] = useState([])
+
+  useEffect( () => {
+    const getExpensesType = async () => {
+      const res = await fetch("http://localhost:8080/getExpensesType")
+
+      const expensesTypeResponse = await res.json()
+      const expensesType = expensesTypeResponse.expensesType.map(expense => {
+        return {
+          id: expense.ID, name: expense.Name
+        }
+      })
+
+      setExepensesType(expensesType)
+    }
+
+    getExpensesType()
+  }, [])
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -55,7 +73,13 @@ export default function NovaDespesa({tiposDespesas}: any) {
           <label htmlFor="expenseTypeId">Tipo de despesa</label>
           <select id="expenseTypeId" className="form-control" name="expenseTypeId">
           <option>Selecione</option>
-            <option value="1">Maoe</option>
+          {
+            expensesType ?
+              expensesType.map(type => {
+                return <option value={type.id}>{type.name}</option>
+              }) 
+              : "carregando"
+          }
           </select>
         </div>
         <div className="col-md-6">
