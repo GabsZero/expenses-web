@@ -2,6 +2,11 @@
 
 import { FormEvent, useEffect, useState } from "react"
 
+type ExpenseType = {
+  id: number,
+  name: string
+}
+
 export default function NovaDespesa({tiposDespesas}: any) {
   let [error, setError] = useState("")
   const [expensesType, setExepensesType] = useState([])
@@ -11,7 +16,7 @@ export default function NovaDespesa({tiposDespesas}: any) {
       const res = await fetch("http://localhost:8080/getExpensesType")
 
       const expensesTypeResponse = await res.json()
-      const expensesType = expensesTypeResponse.expensesType.map(expense => {
+      const expensesType: ExpenseType[] = expensesTypeResponse.expensesType.map(expense => {
         return {
           id: expense.ID, name: expense.Name
         }
