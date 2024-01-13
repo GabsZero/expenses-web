@@ -21,15 +21,12 @@ export default function NovaDespesa({tiposDespesas}: any) {
       body: bodyRequest
     })
 
-    console.log(!response.ok)
     if(!response.ok){
       setError("Erro ao gravar despesa")
       return false
     }
 
     const data = await response.json()
-
-    console.log(response)
   }
 
 
