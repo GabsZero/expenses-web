@@ -1,5 +1,6 @@
 'use client';
 
+import { redirect } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react"
 
 type ExpenseType = {
@@ -50,6 +51,8 @@ export default function NovaDespesa({tiposDespesas}: any) {
     }
 
     const data = await response.json()
+
+    window.location.href = "/"
   }
 
 
