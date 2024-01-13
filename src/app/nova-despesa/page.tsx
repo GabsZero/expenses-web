@@ -23,7 +23,6 @@ export default function NovaDespesa({tiposDespesas}: any) {
 
     console.log(!response.ok)
     if(!response.ok){
-      console.log("macaralho")
       setError("Erro ao gravar despesa")
       return false
     }
