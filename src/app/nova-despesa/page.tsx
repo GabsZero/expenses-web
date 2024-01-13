@@ -9,7 +9,7 @@ export default function NovaDespesa({tiposDespesas}: any) {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     formData.set("isPaid", formData.get('isPaid') == "on" ? "1" : "0")
-    formData.set("isRecurring", formData.get('isPaid') == "on" ? "1" : "0")
+    formData.set("isRecurring", formData.get('isRecurring') == "on" ? "1" : "0")
 
     const bodyRequest = new FormData()
     formData.forEach((item, key) => {
