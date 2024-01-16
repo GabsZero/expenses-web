@@ -1,11 +1,11 @@
 'use client'
 
-export default function SelectComponent({array, label}: any){
+export default function SelectComponent({array, label, inputName, required}: any){
 
   return (
     <>
-      <label htmlFor={label}>{label}</label>
-      <select id={label} className="form-control" name={label}>
+      <label htmlFor={inputName}>{label}</label>
+      <select required={required} id={inputName} className="form-control" name={inputName}>
         <option>Selecione</option>
         {
           array ?
