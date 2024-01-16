@@ -21,7 +21,7 @@ const getTiposDespesa = async () => {
   return expensesType
 }
 
-export default async function NovaDespesa({tiposDespesas}: any) {
+export default async function NovaDespesa() {
   
   const tiposDespesa =  await getTiposDespesa()
 
