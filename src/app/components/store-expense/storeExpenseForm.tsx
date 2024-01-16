@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react"
 
-export default function StoreForm({tiposDespesa}){
+export default function StoreForm({tiposDespesa}: any){
   const [error, setError] = useState("")
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
