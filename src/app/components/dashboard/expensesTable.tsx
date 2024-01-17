@@ -57,7 +57,7 @@ function mapExpenses(expenses: Expense[]) {
   return expenses.map(expense => {
     return <tr key={expense.ID}>
       <td>{expense.Name}</td>
-      <td>{new Date(expense.date).toLocaleDateString()}</td>
+      <td>{new Date(expense.date).toLocaleDateString('pt-br')}</td>
       <td>{expense.CurrentInstallment}</td>
       <td>{expense.TotalInstallments}</td>
       <td>{expense.ExpenseType.Name}</td>

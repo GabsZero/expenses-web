@@ -19,7 +19,7 @@ async function getData(mes: string, ano: string) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data')
   }
- 
+  
   return await res.json()
 }
 
