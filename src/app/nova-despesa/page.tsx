@@ -22,26 +22,23 @@ const getTiposDespesa = async () => {
 }
 
 export default async function NovaDespesa() {
-  let error = ""
 
   const handleSubmit = async (formData: any) => {
     'use server'
     formData.set("isPaid", formData.get('isPaid') == "on" ? "1" : "0")
-    formData.set("isRecurring", formData.get('isRecurring') == "on" ? "1" : "0")
+    // formData.set("isRecurring", formData.get('isRecurring') == "on" ? "1" : "0")
 
     const response = await fetch('http://localhost:8080/expenses', {
       method: 'POST',
       body: formData
     })
 
-    if(!response.ok){
-      error = "Erro ao gravar despesa"
-      return false
-    }
-
     const data = await response.json()
 
-    console.log(data)
+    if(!response.ok){
+      const errorResponse = data.message
+      return false
+    }
 
     permanentRedirect("/")
   }
@@ -92,15 +89,6 @@ export default async function NovaDespesa() {
       <div className="col-md-12 text-right">
         <input className="btn btn-lg btn-primary" type="submit" value="Enviar" />
       </div>
-      {
-        error != "" ?
-        <div className="row mt-3">
-          <div className="col-md-12 text-center alert alert-danger">
-            {error}
-          </div>
-        </div>
-        : ""
-      }
     </div>
   </form>
   )
