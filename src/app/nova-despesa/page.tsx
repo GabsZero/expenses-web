@@ -27,7 +27,7 @@ export default async function NovaDespesa() {
   const handleSubmit = async (formData: any) => {
     'use server'
     formData.set("isPaid", formData.get('isPaid') == "on" ? "1" : "0")
-    // formData.set("isRecurring", formData.get('isRecurring') == "on" ? "1" : "0")
+    formData.set("isRecurring", formData.get('isRecurring') == "on" ? "1" : "0")
 
     const response = await fetch('http://localhost:8080/expenses', {
       method: 'POST',
