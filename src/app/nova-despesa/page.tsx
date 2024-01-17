@@ -1,4 +1,5 @@
 
+import Link from "next/link";
 import SelectComponent from "../components/store-expense/SelectComponent";
 import { permanentRedirect } from "next/navigation";
 
@@ -88,6 +89,7 @@ export default async function NovaDespesa() {
     <div className="row text-center mt-3">
       <div className="col-md-12 text-right">
         <input className="btn btn-lg btn-primary" type="submit" value="Enviar" />
+        <Link href="/" className="btn btn-lg btn-outline-secondary ml-3"> Cancelar</Link>
       </div>
     </div>
   </form>
