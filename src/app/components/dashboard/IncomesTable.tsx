@@ -50,7 +50,7 @@ function mapExpenses(incomes: Income[]) {
   return incomes.map(income => {
     return <tr key={income.ID}>
       <td>{income.Name}</td>
-      <td>{new Date(income.date).toLocaleDateString()}</td>
+      <td>{new Date(income.date).toLocaleDateString('pt-br')}</td>
       <td>{income.IncomeType.Name}</td>
       <td>R${income.Amount}</td>
     </tr>
