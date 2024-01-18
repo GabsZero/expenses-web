@@ -9,27 +9,26 @@ type IncomeType = {
 }
 
 
-const getTiposDespesa = async () => {
-  const res = await fetch("http://localhost:8080/getExpensesType")
+const getTiposEntrada = async () => {
+  const res = await fetch("http://localhost:8080/getIncomeTypes")
 
-  const expensesTypeResponse = await res.json()
-  const expensesType: IncomeType[] = expensesTypeResponse.expensesType.map(expense => {
+  const incomeTypesResponse = await res.json()
+  const incomeTypes: IncomeType[] = incomeTypesResponse.incomeTypes.map(income => {
     return {
-      id: expense.ID, name: expense.Name
+      id: income.ID, name: income.Name
     }
   })
 
-  return expensesType
+  return incomeTypes
 }
 
-export default async function NovaDespesa() {
+export default async function NovaEntrada() {
 
   const handleSubmit = async (formData: any) => {
     'use server'
-    formData.set("isPaid", formData.get('isPaid') == "on" ? "1" : "0")
-    formData.set("isRecurring", formData.get('isRecurring') == "on" ? "1" : "0")
 
-    const response = await fetch('http://localhost:8080/expenses', {
+    console.log(formData)
+    const response = await fetch('http://localhost:8080/incomes', {
       method: 'POST',
       body: formData
     })
@@ -38,13 +37,14 @@ export default async function NovaDespesa() {
 
     if(!response.ok){
       const errorResponse = data.message
+      // TODO: implementar o fluxo triste
       return false
     }
 
     permanentRedirect("/")
   }
   
-  const tiposDespesa =  await getTiposDespesa()
+  const tiposEntrada =  await getTiposEntrada()
 
   return (
     <form action={handleSubmit}>
@@ -57,33 +57,14 @@ export default async function NovaDespesa() {
         <label htmlFor="date">Data</label>
         <input name="date" id="date" required className="form-control" type="date" />
       </div>
-      <div className="col-md-3">
-        <label htmlFor="currentInstallment">Parcela atual</label>
-        <input name="currentInstallment" required id="currentInstallment" className="form-control" type="number" />
-      </div>
-      <div className="col-md-3">
-        <label htmlFor="totalInstallments">Total de parcelas</label>
-        <input name="totalInstallments" required id="totalInstallments" className="form-control" type="number" />
+      <div className="col-md-6">
+        <SelectComponent array={tiposEntrada} label="Tipo de entrada" inputName="incomeTypeId" required="required" />
       </div>
     </div>
     <div className="row">
       <div className="col-md-6">
-        <SelectComponent array={tiposDespesa} label="Tipo de despesa" inputName="incomeTypeId" required="required" />
-      </div>
-      <div className="col-md-6">
         <label htmlFor="amount">Valor</label>
         <input name="amount" id="amount" step=".01" className="form-control" type="number" />
-      </div>
-    </div>
-    <div className="row text-center mt-3">
-      <div className="col-md-12">
-        <div className="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-          <input type="checkbox" className="btn-check" id="btncheck1" name="isPaid" autoComplete="off" />
-          <label className="btn btn-outline-primary" htmlFor="btncheck1">Tá pago?</label>
-
-          <input type="checkbox" className="btn-check" id="btncheck2" name="isRecurring" autoComplete="off" />
-          <label className="btn btn-outline-primary" htmlFor="btncheck2">É recorrente?</label>
-        </div>
       </div>
     </div>
     <div className="row text-center mt-3">
