@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 type Props = {
   incomes: Income[],
@@ -10,7 +11,7 @@ export default async function IncomesTable({incomes, total} :Props) {
   return (
     <div className="card">
       <div className="card-header">
-        <h2>Entradas</h2>
+        <h2>Entradas <Link className="btn btn-lg btn-success" href="/nova-entrada">+ nova entrada</Link></h2>
       </div>
       <div className="card-body">
       <table className="table">
